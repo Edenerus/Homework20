@@ -54,13 +54,14 @@ class MovieView(Resource):
 
     def put(self, mid):
         try:
+
+            req_json = request.json
+            req_json["id"] = mid
+
             movie = movie_service.get_one(mid)
 
             if not movie:
                 return "Такого фильма нет в базе данных", 404
-
-            req_json = request.json
-            req_json["id"] = mid
 
             movie_service.update(req_json)
 
@@ -71,13 +72,14 @@ class MovieView(Resource):
 
     def patch(self, mid):
         try:
+
+            req_json = request.json
+            req_json["id"] = mid
+
             movie = movie_service.get_one(mid)
 
             if not movie:
                 return "Такого фильма нет в базе данных", 404
-
-            req_json = request.json
-            req_json["id"] = mid
 
             movie_service.patch(req_json)
 

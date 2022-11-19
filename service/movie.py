@@ -38,8 +38,8 @@ class MovieService:
 
         fields_to_update = ["title", "description", "trailer", "year", "rating", "genre_id", "director_id"]
 
-        #for field in fields_to_update:
-        setattr(movie, field, data.get(field))
+        for field in fields_to_update:
+            setattr(movie, field, data.get(field))
 
         self.dao.update(movie)
 

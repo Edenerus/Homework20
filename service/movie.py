@@ -38,10 +38,10 @@ class MovieService:
 
         fields_to_update = ["title", "description", "trailer", "year", "rating", "genre_id", "director_id"]
 
-        for field in fields_to_update:
-            setattr(movie, field, data.get(field))
+        #for field in fields_to_update:
+        setattr(movie, field, data.get(field))
 
-        self.dao.update(data)
+        self.dao.update(movie)
 
     def patch(self, data):
         mid = data.get("id")
@@ -53,7 +53,7 @@ class MovieService:
             if data.get(field):
                 setattr(movie, field, data.get(field))
 
-        self.dao.update(data)
+        self.dao.update(movie)
 
     def delete(self, mid):
         self.dao.delete(mid)

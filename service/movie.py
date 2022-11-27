@@ -5,55 +5,35 @@ class MovieService:
     def __init__(self, dao: MovieDao):
         self.dao = dao
 
-    def get_one(self, mid):
-        return self.dao.get_one(mid)
+    def get_one(self, bid):
+        return self.dao.get_one(bid)
 
-    def get_all(self, director_id, genre_id, year):
+    def get_all(self):
+        return self.dao.get_all()
 
-        if director_id:
-            all_movies = self.dao.get_all_movies_director(director_id)
+    def create(self, movie_d):
+        return self.dao.create(movie_d)
 
-            return all_movies
+    def update(self, movie_d):
+        return self.dao.update(movie_d)
 
-        if genre_id:
-            all_movies = self.dao.get_all_movies_genre(genre_id)
-
-            return all_movies
-
-        if year:
-            all_movies = self.dao.get_all_movies_year(year)
-
-            return all_movies
-
-        all_movies = self.dao.get_all()
-
-        return all_movies
-
-    def create(self, data):
-        return self.dao.create(data)
-
-    def update(self, data):
-        mid = data.get("id")
-        movie = self.get_one(mid)
-
-        fields_to_update = ["title", "description", "trailer", "year", "rating", "genre_id", "director_id"]
-
-        for field in fields_to_update:
-            setattr(movie, field, data.get(field))
-
+    def partially_update(self, movie_d):
+        movie = self.get_one(movie_d["id"])
+        if "title" in movie_d:
+            movie.title = movie_d.get("title")
+        if "description" in movie_d:
+            movie.description = movie_d.get("description")
+        if "trailer" in movie_d:
+            movie.trailer = movie_d.get("trailer")
+        if "year" in movie_d:
+            movie.year = movie_d.get("year")
+        if "rating" in movie_d:
+            movie.rating = movie_d.get("rating")
+        if "genre_id" in movie_d:
+            movie.genre_id = movie_d.get("genre_id")
+        if "director_id" in movie_d:
+            movie.director_id = movie_d.get("director_id")
         self.dao.update(movie)
 
-    def patch(self, data):
-        mid = data.get("id")
-        movie = self.get_one(mid)
-
-        fields_to_update = ["title", "description", "trailer", "year", "rating", "genre_id", "director_id"]
-
-        for field in fields_to_update:
-            if data.get(field):
-                setattr(movie, field, data.get(field))
-
-        self.dao.update(movie)
-
-    def delete(self, mid):
-        self.dao.delete(mid)
+    def delete(self, rid):
+        self.dao.delete(rid)
